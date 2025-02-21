@@ -5,7 +5,7 @@ const http = require("http");
 const fs = require("fs");
 
 let user;
-fs.readFile("database/useer.json","utf8", (err,data) => {
+fs.readFile("database/user.json","utf8", (err,data) => {
   if(err) {
     console.log("ERROR:", err);
   } else {
@@ -17,7 +17,6 @@ fs.readFile("database/useer.json","utf8", (err,data) => {
 app.use(express.static("public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
 //2 Session Code
 //3 Views code
 app.set("views", "views");
