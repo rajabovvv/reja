@@ -1,31 +1,26 @@
-console.log("web serverni boshlash");
-const express = require("express");
-const app = express();
 const http = require("http");
+const mongodb = require("mongodb");
 
-//1 Kirish Code
-app.use(express.static("public"));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+let db;
+const connectionString = "mongodb+srv://alexxoneee:2C8Ko7wk84DgKzFU@cluster0.lf7ty.mongodb.net/Reja?retryWrites=true&w=majority";
 
-//2 Session Code
-//3 Views code
-app.set("views", "views");
-app.set("view engine", "ejs");
-
-//4 Routing code
-
-app.post("/create-item", (req, res) => {
-  console.log(req.body);
-  res.json({ test: "success" });
-});
-
-app.get("/", function (req, res) {
-  res.render("reja");
-});
-
-const server = http.createServer(app);
-let PORT = 3000;
-server.listen(PORT, function (req, res) {
-  console.log(`server is running succesfully: ${PORT}, http://localhost:${PORT}`);
-});
+mongodb.connect(
+    connectionString,
+    {
+        useNewUrlParser: true,
+        useUnifiedtopology:true,
+    },
+    (err,client) => {
+        if(err) console.log("ERROR on connection MONGODB");
+        else{
+            console.log("MONGODB connection succeed");
+            module.exports = client;
+            const app = require("./app");
+            const server = http.createServer(app);
+            let PORT =3000;
+            server.listen(PORT,function () {
+                console.log(`The server is running successfully on port:${PORT}, http://localhost:${PORT} `);
+            });
+        }
+    }
+) ;
