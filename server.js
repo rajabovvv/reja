@@ -21,11 +21,11 @@ app.post("/create-item", (req, res) => {
 });
 
 app.get("/", function (req, res) {
-  res.render("harid");
+  res.render("reja");
 });
 
 const server = http.createServer(app);
 let PORT = 3000;
 server.listen(PORT, function (req, res) {
-  console.log("server is running succesfully");
+  console.log(`server is running succesfully: ${PORT}, http://localhost:${PORT}`);
 });

@@ -112,4 +112,5 @@ async function maslahatBering(a) {
             console.log("harflar marotaba:", result); 
         }
     });
+    //2C8Ko7wk84DgKzFU
     
