@@ -1,7 +1,8 @@
 console.log("web serverni boshlash");
 const express = require("express");
 const app = express();
-//MongoDB choqirish
+
+//MongoDB chaqirish
 const db = require("./server").db();
 
 //1 Kirish Code
@@ -17,12 +18,29 @@ app.set("view engine", "ejs");
 //4 Routing code
 
 app.post("/create-item", (req, res) => {
-  console.log(req.body);
-  res.json({ test: "success" });
+  console.log("user entered /create-item")
+  const new_reja = req.body.reja;
+  db.collection("plans").insertOne({ reja: new_reja }, (err, data) => {
+    if (err) {
+      console.log(err);
+      res.end("something went wrong");
+    } else {
+      console.log("successfully added");
+      res.send("Item added successfully");
+    }
+  });
 });
 
 app.get("/", function (req, res) {
-  res.render("reja");
+  console.log("user entered /")
+  db.collection("plans").find().toArray((err, data) => {
+    if (err) {
+      console.log(err);
+      res.end("something went wrong");
+    } else {
+      res.render("reja", { items: data }); // ✅ FIXED!
+    }
+  });
 });
 
 module.exports = app;
