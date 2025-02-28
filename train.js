@@ -1,4 +1,17 @@
-console.log("train successfully working");
+
+async function raqamSanash(input) {
+    let count = 0;
+    for (let item of input) { 
+      if (item >= '0' && item <= '9') {
+        count++;
+      }
+    }
+    return count;
+  }
+  
+  raqamSanash("ad2a54y79wet0sfgb9").then(console.log); 
+  
+
 /*console.log('Jack Ma maslahatlari:');
 
 const list = [
@@ -95,7 +108,7 @@ async function maslahatBering(a) {
         
     }
 
-    run();*/
+    run();
 
 
 
@@ -112,5 +125,5 @@ async function maslahatBering(a) {
             console.log("harflar marotaba:", result); 
         }
     });
-    //2C8Ko7wk84DgKzFU
+    //2C8Ko7wk84DgKzFU*/
     
