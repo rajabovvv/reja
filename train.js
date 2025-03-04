@@ -1,5 +1,23 @@
+function divide(a, b, callback) {
+    if (b === 0) {
+      callback("Error: Division by zero");
+    } else {
+      callback(null, a / b);  // null means no error, followed by the result
+    }
+  }
+  
+  divide(10, 1, function(err, result) {
+    if (err) {
+      console.log(err);  // "Error: Division by zero"
+    } else { console.log("counting...")
+    setTimeout(() => {
+        console.log(result);
+      },3000)  // 5
+    }
+  });
+  
 
-async function raqamSanash(input) {
+/*async function raqamSanash(input) {
     let count = 0;
     for (let item of input) { 
       if (item >= '0' && item <= '9') {
@@ -11,8 +29,8 @@ async function raqamSanash(input) {
   
   raqamSanash("ad2a54y79wet0sfgb9").then(console.log); 
   
-
-/*console.log('Jack Ma maslahatlari:');
+/*
+console.log('Jack Ma maslahatlari:');
 
 const list = [
     'Yaxshi talaba bo\'ling', // 0-20
