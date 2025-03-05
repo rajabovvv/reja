@@ -1,4 +1,97 @@
-function divide(a, b, callback) {
+class Shop {
+    constructor(non, lagmon, cola) {
+        this.products = {
+            non:non,
+            lagmon:lagmon,
+            cola:cola,
+        };
+    }
+
+qoldiq(){
+    const time = new Date().toLocaleTimeString();
+    return `Hozir  ${time}da ${this.products.non}ta non, ${this.products.lagmon}ta lagmon va ${this.products.cola}ta cola mavjud!`;
+}
+
+sotish(product,quantity){
+    const time = new Date().toLocaleTimeString();
+
+    if (this.products[product] === undefined) {
+        return `Xatolik ${product} dokonda yoq`;
+    }
+
+    if (this.products[product] < quantity) {
+        return `Xaatolik!  ${product} uchun yetarli mahsuslot yoq!`;
+    }
+
+    this.products[product] -= quantity;
+    return`Hozir ${time}da ${quantity}ta ${product} sotildi`
+}
+
+qabul(product, quantity) {
+    const time = new Date().toLocaleDateString();
+
+if (this.products[product] === undefined) {
+    return `Xatolik ${product} do'konga qabul qilib bolmaydi`
+    }
+this.products[product] += quantity;
+return `Hozir ${time}da ${quantity}ta ${product} qabul qilinadi!`;
+    }
+}
+
+const shop = new Shop(4,5,2);
+console.log(shop.qoldiq());
+
+
+
+
+/*class Shop {
+    constructor(bread, lagmon, cola) {
+      this.products = {
+        bread: bread,
+        lagmon: lagmon,
+        cola: cola
+      };
+    }
+  
+    getCurrentTime() {
+      const now = new Date();
+      return `${now.getHours()}:${now.getMinutes()}`;
+    }
+  
+    remaining() {
+      console.log(`Now at ${this.getCurrentTime()} there are ${this.products.bread} breads, ${this.products.lagmon} lagmons, and ${this.products.cola} colas!`);
+    }
+  
+    sell(product, quantity) {
+      if (this.products[product] === undefined) {
+        console.log(`Product ${product} not found!`);
+        return;
+      }
+      if (this.products[product] < quantity) {
+        console.log(`Not enough ${product}s in stock to sell!`);
+        return;
+      }
+      this.products[product] -= quantity;
+      console.log(`Now at ${this.getCurrentTime()} sold ${quantity} ${product}(s).`);
+    }
+  
+    accept(product, quantity) {
+      if (this.products[product] === undefined) {
+        console.log(`Product ${product} not found!`);
+        return;
+      }
+      this.products[product] += quantity;
+      console.log(`Now at ${this.getCurrentTime()} received ${quantity} ${product}(s).`);
+    }
+  }
+  
+  // Example usage:
+  const shop = new Shop(4, 5, 2);
+  shop.remaining();
+  shop.sell("bread", 3);
+  shop.accept("cola", 4);
+  shop.remaining();
+/*function divide(a, b, callback) {
     if (b === 0) {
       callback("Error: Division by zero");
     } else {
