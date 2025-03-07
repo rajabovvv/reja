@@ -1,62 +1,88 @@
-console.log("web serverni boshlash");
+console.log("Web serverni boshlash...");
 
 const express = require("express");
+const { MongoClient, ObjectId } = require("mongodb");
+
 const app = express();
+const PORT = 3000; // Change if needed
 
-// MongoDB chaqirish
-const db = require("./server").db();
-const mngodb = require("mongodb");
+// ✅ MongoDB Connection
+const dbUrl = "mongodb://localhost:27017"; // Change if using a remote DB
+const dbName = "rejaDB";
+let db;
 
-// 1 Kirish Code
+// Connect to MongoDB and start server **ONLY AFTER connection is established**
+MongoClient.connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then((client) => {
+        console.log("MongoDB ga ulanish hosil qilindi!");
+        db = client.db(dbName);
+
+        // ✅ Start the server **after** successful DB connection
+        app.listen(PORT, () => {
+            console.log(`Server ${PORT} portda ishlamoqda...`);
+        });
+    })
+    .catch((err) => {
+        console.error("MongoDB ulanish xatosi:", err);
+        process.exit(1); // Exit the process if DB connection fails
+    });
+
+// ✅ Middleware
 app.use(express.static("public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// 2 Session Code
-// 3 Views code
-app.set("views", "views");
-app.set("view engine", "ejs");
+// ✅ Routes
 
-// 4 Routing code
-
+// Create Item
 app.post("/create-item", (req, res) => {
-  console.log("user entered /create-item");
-  const new_reja = req.body.reja;
+    if (!db) return res.status(500).json({ error: "Database not connected" });
 
-  db.collection("plans").insertOne({ reja: new_reja }, (err, data) => {
-    if (err) {
-      console.log("Error inserting item:", err);
-      res.status(500).json({ error: "Database error" });
-    } else {
-      console.log("Inserted ID:", data.insertedId);
-      res.json({ _id: data.insertedId, reja: new_reja });
-    }
-  });
+    db.collection("plans").insertOne({ reja: req.body.reja })
+        .then((result) => {
+            res.json({ _id: result.insertedId, reja: req.body.reja });
+        })
+        .catch((err) => {
+            console.error("Error inserting item:", err);
+            res.status(500).json({ error: "Database error" });
+        });
 });
 
+// Delete Item
 app.post("/delete-item", (req, res) => {
-  const id = req.body.id;
+    if (!db) return res.status(500).json({ error: "Database not connected" });
 
-  db.collection("plans").deleteOne({ _id: new mngodb.ObjectId(id) }, function (err, data) {
-    if (err) {
-      console.log("Error deleting item:", err);
-      res.status(500).json({ error: "Database error" });
-    } else {
-      res.json({ state: "success" });
-    }
-  });
+    db.collection("plans").deleteOne({ _id: new ObjectId(req.body.id) })
+        .then(() => res.json({ state: "success" }))
+        .catch((err) => {
+            console.error("Error deleting item:", err);
+            res.status(500).json({ error: "Database error" });
+        });
 });
 
-app.get("/", function (req, res) {
-  console.log("user entered /");
-  db.collection("plans").find().toArray((err, data) => {
-    if (err) {
-      console.log("Database error:", err);
-      res.end("Something went wrong");
-    } else {
-      res.render("reja", { items: data });
-    }
-  });
+// Edit Item
+app.post("/edit-item", (req, res) => {
+    if (!db) return res.status(500).json({ error: "Database not connected" });
+
+    db.collection("plans").findOneAndUpdate(
+        { _id: new ObjectId(req.body.id) },
+        { $set: { reja: req.body.new_input } }
+    )
+        .then(() => res.json({ state: "success" }))
+        .catch((err) => {
+            console.error("Error updating item:", err);
+            res.status(500).json({ error: "Database error" });
+        });
 });
 
-module.exports = app;
+// Load Items on Page Load
+app.get("/", (req, res) => {
+    if (!db) return res.status(500).json({ error: "Database not connected" });
+
+    db.collection("plans").find().toArray()
+        .then((data) => res.json(data))
+        .catch((err) => {
+            console.error("Database error:", err);
+            res.status(500).json({ error: "Database error" });
+        });
+});

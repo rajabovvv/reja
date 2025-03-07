@@ -14,7 +14,7 @@
       <h1 class="display-4 text-center py-1">REJA VA MAQSADLAR</h1>
 
       <div class="jumbotron p-3 shadow-sm">
-        <form id="create-form">
+        <form id="create-form" action="/create-item" method="POST">
           <div class="d-flex align-items-center">
             <input
               id="create-field"
@@ -31,7 +31,8 @@
           </div>
         </form>
       </div>
-      <ul id="item-list" class="list-group pb-5">
+
+      <ul id="item_list" class="list-group pb-5">
         <% items.forEach(function(item) { %>
           <li class="list-group-item list-group-item-info d-flex align-items-center justify-content-between">
             <span class="item-text"><%= item.reja %></span>
@@ -51,13 +52,11 @@
         <% }) %>
       </ul>
 
-      <button id="clean-all" class="btn btn-danger" style="border-radius: 20px">
-
+      <button id="clean_all" class="btn btn-danger" style="border-radius: 20px">
         HAMMA REJALARNI OCHIRISH
       </button>
     </div>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="/browser.js"></script>
-
   </body>
 </html>
