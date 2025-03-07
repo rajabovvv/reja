@@ -1,4 +1,25 @@
-class Shop {
+
+//mittaskd
+function checkingLetters(input1, input2) {
+   
+  const sortedInput1 = input1.split('').sort().join('');
+  const sortedInput2 = input2.split('').sort().join('');
+  
+  return sortedInput1 === sortedInput2;
+}
+
+console.log(checkingLetters("mitgroup", "gmtiprou"));  
+console.log(checkingLetters("mitgroup", "groupmit"));  
+
+
+///mittaask e  
+function getReverse(str) {
+  return str.split('').reverse().join('');
+}
+
+console.log(getReverse("hello"));  
+
+/*class Shop {
     constructor(non, lagmon, cola) {
         this.products = {
             non:non,
