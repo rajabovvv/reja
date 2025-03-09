@@ -15,7 +15,7 @@ function itemTemplate(item) {
 let createField = document.getElementById("create-field");
 let itemList = document.getElementById("item-list");
 
-// ✅ CREATE Operation
+
 document.getElementById("create-form").addEventListener("submit", function (e) {
     e.preventDefault();
 
@@ -31,7 +31,7 @@ document.getElementById("create-form").addEventListener("submit", function (e) {
         });
 });
 
-// ✅ DELETE & EDIT Operations
+
 document.addEventListener("click", function (e) {
     // DELETE Operation
     if (e.target.classList.contains("delete-me")) {
@@ -39,7 +39,8 @@ document.addEventListener("click", function (e) {
             axios
                 .post("/delete-item", { id: e.target.getAttribute("data-id") })
                 .then(() => {
-                    e.target.closest("li").remove();
+                    console.log(response.data);
+                    e.target.parentElement.parentElement.remove();
                 })
                 .catch((err) => {
                     console.error("Iltimos qaytadan xarakat", err);
@@ -69,3 +70,5 @@ document.addEventListener("click", function (e) {
         }
     }
 });
+
+document.getElementById("clean-all").addEventListener()
