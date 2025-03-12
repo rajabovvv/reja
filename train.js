@@ -1,5 +1,38 @@
+//mittaskg
+/*TASK G:
 
-//mittaskd
+Yagona parametrga ega function tuzing.
+Va bu function parametr orqalik integer ma'lumot turlariga ega bo'lgan bir arrayni qabul qilsin.
+Ushbu function bizga arrayning tarkibidagi birinchi eng katta qiymatning indeksini qaytarsin.
+
+MASALAN: getHighestIndex([5, 21, 12, 21 ,8]); return qiladi 1 sonini
+Yuqoridagi misolda, birinchi indeksda 21 joylashgan.
+Va bu 21 soni arrayning tarkibidagi birinchi eng katta son hisobladi va bizga uning indeksi 1 qaytadi.*/
+
+function getHighestIndex(array) {
+  let max = array[0];
+  let index = 0;
+
+  for( let i = 1;i < array.length; i++){
+    if (array[i]>max) {
+      max = array[i];
+      index = i;
+    }
+  }
+  const result = index;
+  return  result;
+};
+
+console.log(getHighestIndex([5,23,65,3,55,6]));
+console.log(getHighestIndex([5,21000,65,3,55,6]));
+console.log(getHighestIndex([5,21000,65,3,55,3212126]));
+
+
+
+
+
+
+/*mittaskd
 function checkingLetters(input1, input2) {
    
   const sortedInput1 = input1.split('').sort().join('');
